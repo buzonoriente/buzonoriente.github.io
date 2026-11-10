@@ -17,26 +17,46 @@
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
   <link rel="manifest" href="manifest.webmanifest">
   <meta name="apple-mobile-web-app-title" content="Buzón Reyes">
-  <meta http-equiv="refresh" content="0; url=https://script.google.com/macros/s/AKfycbwBoJMPcjEFVvsT4zno28ipDgknIhX_vYGJ6gMhNWW8c0HxQa-obiSvZFPuIx63mOgw6g/exec">
-  <script>
-    location.replace('https://script.google.com/macros/s/AKfycbwBoJMPcjEFVvsT4zno28ipDgknIhX_vYGJ6gMhNWW8c0HxQa-obiSvZFPuIx63mOgw6g/exec');
-  </script>
+  <!-- Por si el navegador no ejecuta JavaScript: salta a la app a los 2 segundos -->
+  <meta http-equiv="refresh" content="2; url=https://script.google.com/macros/s/AKfycbwBoJMPcjEFVvsT4zno28ipDgknIhX_vYGJ6gMhNWW8c0HxQa-obiSvZFPuIx63mOgw6g/exec">
   <style>
     :root { color-scheme: dark; }
+    * { box-sizing: border-box; }
     body {
-      margin: 0; min-height: 100vh; display: grid; place-items: center; text-align: center;
-      font-family: Georgia, 'Times New Roman', serif; color: #F8F1E1;
-      background: linear-gradient(180deg, #1F4D2B 0%, #12301B 100%);
+      margin: 0; min-height: 100vh; display: grid; place-items: center; text-align: center; padding: 24px;
+      font-family: Georgia, 'Times New Roman', serif; color: #F8F1E1; font-size: 18px;
+      background: radial-gradient(ellipse at top, rgba(201, 161, 59, .22), transparent 60%), linear-gradient(180deg, #1F4D2B 0%, #12301B 100%);
     }
-    h1 { font-weight: 400; color: #F3D27A; font-size: 1.8rem; margin: 0 0 8px; }
-    a { color: #F3D27A; font-size: 1.1rem; }
+    .sello { position: relative; width: 150px; height: 150px; margin: 0 auto 22px; }
+    .sello img { position: absolute; inset: 15px; width: 120px; height: 120px; border-radius: 28px; box-shadow: 0 10px 28px rgba(0, 0, 0, .45); animation: latir 1.8s ease-in-out infinite; }
+    .sello::before {
+      content: ''; position: absolute; inset: 0; border-radius: 50%;
+      border: 4px solid rgba(243, 210, 122, .18); border-top-color: #F3D27A; animation: girar 1.1s linear infinite;
+    }
+    h1 { font-weight: 400; color: #F3D27A; font-size: 1.7rem; margin: 0 0 8px; }
+    p { margin: 6px 0; }
+    .suave { color: #d8cfb8; font-size: .95rem; }
+    .tarde { visibility: hidden; margin-top: 18px; }
+    .tarde.visible { visibility: visible; }
+    a { color: #F3D27A; }
+    @keyframes girar { to { transform: rotate(360deg); } }
+    @keyframes latir { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.06); } }
+    @media (prefers-reduced-motion: reduce) { .sello img, .sello::before { animation: none; } }
   </style>
 </head>
 <body>
   <main>
-    <h1>👑 El buzón navideño</h1>
-    <p>Abriendo la Carta a los Reyes Magos…</p>
-    <p><a href="https://script.google.com/macros/s/AKfycbwBoJMPcjEFVvsT4zno28ipDgknIhX_vYGJ6gMhNWW8c0HxQa-obiSvZFPuIx63mOgw6g/exec">Si no se abre sola, toca aquí</a></p>
+    <div class="sello" role="img" aria-label="Cargando"><img src="icono-512.png" alt=""></div>
+    <h1>Abriendo el buzón…</h1>
+    <p class="suave">La primera vez puede tardar unos segundos:<br>los pajes reales están buscando tu carta ✨</p>
+    <p class="tarde" id="tarde"><a href="https://script.google.com/macros/s/AKfycbwBoJMPcjEFVvsT4zno28ipDgknIhX_vYGJ6gMhNWW8c0HxQa-obiSvZFPuIx63mOgw6g/exec">¿Tarda mucho? Toca aquí</a></p>
   </main>
+  <script>
+    // Primero se dibuja esta pantalla y después se va a la app: el navegador la mantiene
+    // a la vista mientras Google prepara la app, así nadie ve una pantalla en blanco.
+    var APP = 'https://script.google.com/macros/s/AKfycbwBoJMPcjEFVvsT4zno28ipDgknIhX_vYGJ6gMhNWW8c0HxQa-obiSvZFPuIx63mOgw6g/exec';
+    requestAnimationFrame(function () { setTimeout(function () { location.replace(APP); }, 60); });
+    setTimeout(function () { document.getElementById('tarde').className = 'tarde visible'; }, 10000);
+  </script>
 </body>
 </html>

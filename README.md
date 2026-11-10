@@ -10,4 +10,4 @@ No contiene nada de la app ni de sus datos. El código de la app está en el rep
 
 Iconos: `icono-512.png`, `icono-192.png`, `apple-touch-icon.png` (180) y `favicon-32.png`, más `manifest.webmanifest` (nombre corto «Buzón Reyes»).
 
-Si algún día cambia el enlace `/exec`, hay que actualizarlo en los tres sitios de `index.html` y en `icono/index.html`.
+Si algún día cambia el enlace `/exec`, hay que actualizarlo en `index.html` (tres sitios: meta refresh, enlace y variable APP) y en `icono/index.html`.
