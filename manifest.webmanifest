@@ -1,0 +1,14 @@
+{
+  "name": "El buzón navideño",
+  "short_name": "Buzón Reyes",
+  "description": "Carta a los Reyes Magos de la familia",
+  "lang": "es",
+  "start_url": "/",
+  "display": "browser",
+  "background_color": "#12301B",
+  "theme_color": "#1F4D2B",
+  "icons": [
+    { "src": "icono-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "icono-512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}

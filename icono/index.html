@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Buzón Reyes</title>
+  <meta name="robots" content="noindex">
+  <meta name="theme-color" content="#1F4D2B">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/icono-192.png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <meta name="apple-mobile-web-app-title" content="Buzón Reyes">
+  <script>
+    // Si en este navegador ya se creó el acceso directo, esta página lleva directamente a la app.
+    var APP = 'https://script.google.com/macros/s/AKfycbwBoJMPcjEFVvsT4zno28ipDgknIhX_vYGJ6gMhNWW8c0HxQa-obiSvZFPuIx63mOgw6g/exec';
+    try { if (localStorage.getItem('buzon_icono_creado') === '1') location.replace(APP); } catch (e) {}
+  </script>
+  <style>
+    :root { color-scheme: dark; }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; min-height: 100vh; padding: 28px 18px; text-align: center;
+      font-family: Georgia, 'Times New Roman', serif; color: #F8F1E1; font-size: 18px; line-height: 1.45;
+      background: linear-gradient(180deg, #1F4D2B 0%, #12301B 100%);
+    }
+    main { max-width: 460px; margin: 0 auto; }
+    img { width: 120px; height: 120px; border-radius: 26px; box-shadow: 0 10px 28px rgba(0, 0, 0, .45); }
+    h1 { font-weight: 400; color: #F3D27A; font-size: 1.7rem; margin: 18px 0 6px; }
+    ol { text-align: left; background: rgba(0, 0, 0, .22); border: 1px solid rgba(201, 161, 59, .55); border-radius: 12px; padding: 14px 16px 14px 36px; }
+    li { margin: 6px 0; }
+    b { color: #F3D27A; }
+    button {
+      font: inherit; font-weight: 600; border: 0; border-radius: 999px; padding: 12px 26px; margin-top: 10px; cursor: pointer;
+      background: #C9A13B; color: #12301B; box-shadow: 0 4px 12px rgba(0, 0, 0, .35);
+    }
+    .nota { font-size: .9rem; color: #d8cfb8; }
+  </style>
+</head>
+<body>
+  <main>
+    <img src="/icono-512.png" alt="Icono del Buzón Reyes: corona dorada sobre fondo verde">
+    <h1>Pon el buzón en tu móvil</h1>
+    <ol>
+      <li>Toca el menú del navegador (<b>⋮</b> o <b>≡</b>).</li>
+      <li>Elige <b>«Añadir a pantalla de inicio»</b> (en Samsung: «Añadir página a» → «Pantalla de inicio»).</li>
+      <li>Déjale el nombre <b>Buzón Reyes</b> y confirma.</li>
+      <li>Vuelve aquí y pulsa el botón de abajo.</li>
+    </ol>
+    <button id="hecho" type="button">✓ Ya lo he añadido, abrir el buzón</button>
+    <p class="nota">Hazlo desde un navegador sin cuentas de Google abiertas (por ejemplo, Firefox), para que la app no te pida elegir cuenta.</p>
+  </main>
+  <script>
+    document.getElementById('hecho').onclick = function () {
+      try { localStorage.setItem('buzon_icono_creado', '1'); } catch (e) {}
+      location.replace(APP);
+    };
+  </script>
+</body>
+</html>
