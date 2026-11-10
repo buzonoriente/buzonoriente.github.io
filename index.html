@@ -55,6 +55,12 @@
     // Primero se dibuja esta pantalla y después se va a la app: el navegador la mantiene
     // a la vista mientras Google prepara la app, así nadie ve una pantalla en blanco.
     var APP = 'https://script.google.com/macros/s/AKfycbwBoJMPcjEFVvsT4zno28ipDgknIhX_vYGJ6gMhNWW8c0HxQa-obiSvZFPuIx63mOgw6g/exec';
+    // Enlace de invitación (?c=CÓDIGO): se pasa el código a la app para que lo rellene sola.
+    var codigo = (/[?&]c=([^&]+)/.exec(location.search) || [])[1];
+    if (codigo) {
+      APP += '?c=' + encodeURIComponent(decodeURIComponent(codigo.replace(/\+/g, ' ')));
+      document.getElementById('tarde').firstChild.href = APP;
+    }
     requestAnimationFrame(function () { setTimeout(function () { location.replace(APP); }, 60); });
     setTimeout(function () { document.getElementById('tarde').className = 'tarde visible'; }, 10000);
   </script>
