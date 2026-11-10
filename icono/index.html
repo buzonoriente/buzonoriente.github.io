@@ -14,7 +14,10 @@
   <script>
     // Si en este navegador ya se creó el acceso directo, esta página lleva directamente a la app.
     var APP = 'https://script.google.com/macros/s/AKfycbwBoJMPcjEFVvsT4zno28ipDgknIhX_vYGJ6gMhNWW8c0HxQa-obiSvZFPuIx63mOgw6g/exec';
-    try { if (localStorage.getItem('buzon_icono_creado') === '1') location.replace(APP); } catch (e) {}
+    // Antes se enseña la pantalla de espera (ver el final de la página), para que no se vea en blanco.
+    var YA_CREADO = false;
+    try { YA_CREADO = localStorage.getItem('buzon_icono_creado') === '1'; } catch (e) {}
+    if (YA_CREADO) document.documentElement.className = 'abriendo';
   </script>
   <style>
     :root { color-scheme: dark; }
@@ -35,10 +38,30 @@
       background: #C9A13B; color: #12301B; box-shadow: 0 4px 12px rgba(0, 0, 0, .35);
     }
     .nota { font-size: .9rem; color: #d8cfb8; }
+    /* Pantalla de espera mientras Google prepara la app */
+    #espera { display: none; min-height: calc(100vh - 56px); place-items: center; }
+    .abriendo #instrucciones { display: none; }
+    .abriendo #espera { display: grid; }
+    .sello { position: relative; width: 150px; height: 150px; margin: 0 auto 22px; }
+    .sello img { position: absolute; inset: 15px; animation: latir 1.8s ease-in-out infinite; }
+    .sello::before {
+      content: ''; position: absolute; inset: 0; border-radius: 50%;
+      border: 4px solid rgba(243, 210, 122, .18); border-top-color: #F3D27A; animation: girar 1.1s linear infinite;
+    }
+    @keyframes girar { to { transform: rotate(360deg); } }
+    @keyframes latir { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.06); } }
+    @media (prefers-reduced-motion: reduce) { .sello img, .sello::before { animation: none; } }
   </style>
 </head>
 <body>
-  <main>
+  <main id="espera">
+    <div>
+      <div class="sello" role="img" aria-label="Cargando"><img src="/icono-512.png" alt=""></div>
+      <h1>Abriendo el buzón…</h1>
+      <p class="nota">La primera vez puede tardar unos segundos:<br>los pajes reales están buscando tu carta ✨</p>
+    </div>
+  </main>
+  <main id="instrucciones">
     <img src="/icono-512.png" alt="Icono del Buzón Reyes: corona dorada sobre fondo verde">
     <h1>Pon el buzón en tu móvil</h1>
     <ol>
@@ -51,10 +74,15 @@
     <p class="nota">Hazlo desde un navegador sin cuentas de Google abiertas (por ejemplo, Firefox), para que la app no te pida elegir cuenta.</p>
   </main>
   <script>
+    function abrir() {
+      document.documentElement.className = 'abriendo';
+      requestAnimationFrame(function () { setTimeout(function () { location.replace(APP); }, 60); });
+    }
     document.getElementById('hecho').onclick = function () {
       try { localStorage.setItem('buzon_icono_creado', '1'); } catch (e) {}
-      location.replace(APP);
+      abrir();
     };
+    if (YA_CREADO) abrir();
   </script>
 </body>
 </html>
